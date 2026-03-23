@@ -1,28 +1,123 @@
-<form action="plan" method="post">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Planner</title>
 
-Name: <input type="text" name="name"><br><br>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #0f172a, #1e293b);
+            color: #e2e8f0;
+        }
 
-Subject: <input type="text" name="subject"><br><br>
+        .topbar {
+            text-align: right;
+            padding: 15px 30px;
+        }
 
-Exam Date: <input type="date" name="examDate"><br><br>
+        .topbar a {
+            color: #38bdf8;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: 500;
+        }
 
-Difficulty:
-<select name="difficulty">
-    <option value="easy">Easy</option>
-    <option value="medium">Medium</option>
-    <option value="hard">Hard</option>
-</select><br><br>
+        .container {
+            width: 70%;
+            margin: 20px auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 10px;
+        }
 
-Learning Pace:
-<select name="pace">
-    <option value="slow">Slow</option>
-    <option value="medium">Medium</option>
-    <option value="fast">Fast</option>
-</select><br><br>
+        h2 {
+            text-align: center;
+            color: #38bdf8;
+        }
 
-Daily Study Hours:
-<input type="number" name="hours"><br><br>
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 15px;
+            border-radius: 6px;
+            border: none;
+        }
 
-<input type="submit" value="Generate Plan">
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
+        button:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <a href="viewPlans">View Plans</a>
+    <a href="logout">Logout</a>
+</div>
+
+<div class="container">
+
+    <h2>Create Study Plan</h2>
+
+    <form action="plan" method="post">
+
+    <label>Number of Subjects</label>
+    <input type="number" id="subjectCount" name="subjectCount" min="1" max="5" required>
+
+    <div id="subjectsContainer"></div>
+
+    <button type="submit">Generate Plan</button>
 </form>
+
+<script>
+    const subjectInput = document.getElementById("subjectCount");
+    const container = document.getElementById("subjectsContainer");
+
+    subjectInput.addEventListener("input", function () {
+
+        container.innerHTML = ""; // clear old fields
+
+        let count = parseInt(this.value);
+
+        for (let i = 1; i <= count; i++) {
+
+            container.innerHTML += `
+                <h3>Subject ${i}</h3>
+
+                <label>Subject Name</label>
+                <input type="text" name="sub${i}" required>
+
+                <label>Topics (comma separated)</label>
+                <input type="text" name="topics${i}" required>
+
+                <label>Difficulty</label>
+                <select name="diff${i}">
+                    <option>Easy</option>
+                    <option>Medium</option>
+                    <option>Hard</option>
+                </select>
+
+                <label>Exam Date</label>
+                <input type="date" name="date${i}" required>
+            `;
+        }
+    });
+</script>
+
+</div>
+
+</body>
+</html>

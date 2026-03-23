@@ -18,38 +18,33 @@ public class StudyPlan {
     }
 
     public List<String> generatePlan() {
-
         List<String> schedule = new ArrayList<>();
-
         if (daysLeft <= 0) {
             schedule.add("Exam date has already passed or is today.");
             return schedule;
         }
-
-        int topicsPerDay;
-
-        // Pace logic
-        if ("fast".equalsIgnoreCase(pace)) {
-            topicsPerDay = 3;
-        } else if ("medium".equalsIgnoreCase(pace)) {
-            topicsPerDay = 2;
-        } else {
-            topicsPerDay = 1;
+        if(daysLeft <= 2) {
+        	schedule.add("No more than 2 days left. Focus on revision and PYQ's.");
         }
-
+        int topicsPerDay;
+        // Pace logic
+        if ("fast".equalsIgnoreCase(pace)) 
+            topicsPerDay = 3;
+        else if ("medium".equalsIgnoreCase(pace)) 
+            topicsPerDay = 2;
+        else 
+            topicsPerDay = 1;
         // Difficulty adjustment
         if ("hard".equalsIgnoreCase(difficulty)) {
             topicsPerDay -= 1;
             if (topicsPerDay < 1) topicsPerDay = 1;
         }
-
         for (int i = 1; i <= daysLeft; i++) {
 
             if (i > daysLeft - 2) {
                 schedule.add("Day " + i + ": Revision + Mock Test (" + dailyHours + " hrs)");
             } else {
-                schedule.add("Day " + i + ": Study " + topicsPerDay +
-                        " topics + Practice problems (" + dailyHours + " hrs)");
+                schedule.add("Day " + i + ": Study " + topicsPerDay + " topics + Practice problems (" + dailyHours + " hrs)");
             }
         }
 

@@ -1,43 +1,66 @@
 package com.examprepplanner.servlet;
-import java.util.List;
+
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import com.examprepplanner.model.StudyPlan;
+import com.examprepplanner.logic.Scheduler;
 
 @WebServlet("/plan")
 public class PlanServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
+    private static final long serialVersionUID = 1L;
 
-	    String name = request.getParameter("name");
-	    String subject = request.getParameter("subject");
-	    String pace = request.getParameter("pace");
-	    String difficulty = request.getParameter("difficulty");
-	    int dailyHours = Integer.parseInt(request.getParameter("hours"));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-	    LocalDate examDate = LocalDate.parse(request.getParameter("examDate"));
-	    LocalDate today = LocalDate.now();
+        // 🔐 SESSION CHECK (IMPORTANT)
+        HttpSession session = request.getSession(false);
 
-	    int daysLeft = (int) ChronoUnit.DAYS.between(today, examDate);
+        if (session == null || session.getAttribute("userId") == null) {
+            response.getWriter().println("Please login first.");
+            return;
+        }
 
-	    StudyPlan plan = new StudyPlan(daysLeft, dailyHours, difficulty, pace);
+//        int userId = (int) session.getAttribute("userId");
 
-	    List<String> planList = plan.generatePlan();
+        // 👤 USER INPUT
+        String name = (String) session.getAttribute("username");
+        int subjectCount = Integer.parseInt(request.getParameter("subjectCount"));
 
-	    request.setAttribute("name", name);
-	    request.setAttribute("subject", subject);
-	    request.setAttribute("daysLeft", daysLeft);
-	    request.setAttribute("planList", planList);
+        // 🧠 SCHEDULER OBJECT
+        Scheduler scheduler = new Scheduler();
 
-	    request.getRequestDispatcher("result.jsp").forward(request, response);
-	}
+        // 📚 COLLECT MULTIPLE SUBJECT DATA
+        for (int i = 1; i <= subjectCount; i++) {
 
+            String subject = request.getParameter("sub" + i);
+            String topics = request.getParameter("topics" + i);
+            String difficulty = request.getParameter("diff" + i);
+            String dateStr = request.getParameter("date" + i);
+
+            // ⚠️ NULL CHECK (prevents crash)
+            if (subject == null || dateStr == null || topics == null) continue;
+
+            LocalDate examDate = LocalDate.parse(dateStr);
+
+            scheduler.addSubject(subject, topics, examDate, difficulty);
+        }
+
+        // 🚀 GENERATE PLAN
+        List<String> planList = scheduler.generatePlan();
+
+        // 📤 SEND TO JSP
+        request.setAttribute("name", name);
+        request.setAttribute("planList", planList);
+
+        
+
+        // 🔄 FORWARD TO RESULT PAGE
+        request.getRequestDispatcher("result.jsp").forward(request, response);
+    }
 }

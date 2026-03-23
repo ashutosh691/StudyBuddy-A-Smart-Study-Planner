@@ -1,112 +1,65 @@
-<%-- <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Study Plan Result</title>
-</head>
-<body>
-
-<h2>Exam Preparation Plan</h2>
-
-<p><b>Name:</b> ${name}</p>
-<p><b>Subject:</b> ${subject}</p>
-<p><b>Days Left:</b> ${daysLeft}</p>
-
-<h3>Your Personalized Study Plan</h3>
-
-<table border="1" cellpadding="8" cellspacing="0">
-    <tr>
-        <th>Study Schedule</th>
-    </tr>
-
-    <c:forEach var="item" items="${planList}">
-        <tr>
-            <td>${item}</td>
-        </tr>
-    </c:forEach>
-
-</table>
-
-</body>
-</html> --%>
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Study Plan Result</title>
+    <meta charset="UTF-8">
+    <title>Study Plan</title>
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #2c3e50, #4ca1af);
             margin: 0;
-            padding: 0;
+            font-family: Arial;
+            background: linear-gradient(to right, #0f172a, #1e293b);
+            color: #e2e8f0;
         }
 
         .container {
-            width: 70%;
-            margin: 50px auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+            width: 75%;
+            margin: 40px auto;
         }
 
         h2 {
             text-align: center;
-            color: #2c3e50;
+            color: #38bdf8;
+            margin-bottom: 30px;
         }
 
-        .info {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .info span {
-            font-weight: bold;
-            color: #34495e;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th {
-            background-color: #34495e;
-            color: white;
-            padding: 12px;
-            text-align: center;
-        }
-
-        td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #38bdf8;
         }
 
         .btn {
             display: block;
-            width: 200px;
-            margin: 25px auto 0;
-            padding: 10px;
+            width: 220px;
+            margin: 30px auto;
+            padding: 12px;
             text-align: center;
-            background-color: #2c3e50;
+            background: #2563eb;
             color: white;
-            text-decoration: none;
-            border-radius: 5px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
         }
 
         .btn:hover {
-            background-color: #1a252f;
+            background: #1d4ed8;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .links a {
+            color: #38bdf8;
+            text-decoration: none;
+            margin: 0 10px;
         }
     </style>
 </head>
@@ -115,30 +68,29 @@
 
 <div class="container">
 
-    <h2>Exam Preparation Plan</h2>
+    <h2>Your Study Plan</h2>
 
-    <div class="info"><span>Name:</span> ${name}</div>
-    <div class="info"><span>Subject:</span> ${subject}</div>
-    <div class="info"><span>Days Left:</span> ${daysLeft}</div>
+    <c:forEach var="item" items="${planList}">
+        <div class="card">
+            ${item}
+        </div>
+    </c:forEach>
 
-    <h3>Your Personalized Study Plan</h3>
-
-    <table>
-        <tr>
-            <th>Study Schedule</th>
-        </tr>
-
+    <!-- SAVE BUTTON -->
+    <form action="savePlan" method="post">
         <c:forEach var="item" items="${planList}">
-            <tr>
-                <td>${item}</td>
-            </tr>
+            <input type="hidden" name="planItem" value="${item}" />
         </c:forEach>
 
-    </table>
+        <button type="submit" class="btn">Save Plan</button>
+    </form>
 
-    <a href="index.html" class="btn">Create Another Plan</a>
+    <div class="links">
+        <a href="index.html">Create New Plan</a>
+        <a href="viewPlans">View Saved Plans</a>
+    </div>
 
 </div>
 
 </body>
-</html>	
+</html>
