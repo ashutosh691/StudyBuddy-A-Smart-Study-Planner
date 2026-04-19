@@ -20,7 +20,7 @@ public class Scheduler {
             this.examDate = examDate;
             this.difficulty = (difficulty == null) ? "easy" : difficulty;
 
-            // ✅ Clean + safe topic parsing
+            // Clean + safe topic parsing
             this.topics = new ArrayList<>();
             for (String t : topicsStr.split(",")) {
                 String cleaned = t.trim();
@@ -55,7 +55,7 @@ public class Scheduler {
             boolean workLeft = false;
             LocalDate currentDate = today.plusDays(day);
 
-            // ✅ Stop if all exams are passed
+            //Stop if all exams are passed
             boolean allExpired = true;
             for (Subject s : subjects) {
                 if (!s.examDate.isBefore(currentDate)) {
@@ -102,7 +102,7 @@ public class Scheduler {
 
                     String topic = s.topics.remove(0);
 
-                    // ✅ Task creation
+                    //Task creation
                     tasks.add(new Task(s.name, topic, currentDate));
 
                     used++;
