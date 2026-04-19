@@ -21,7 +21,7 @@ public class SignupServlet extends HttpServlet {
 
         try (Connection con = DBConnection.getConnection()) {
 
-            // CHECK IF USER EXISTS
+            // Check if user exists
             String checkQuery = "SELECT * FROM users WHERE username=?";
             PreparedStatement checkStmt = con.prepareStatement(checkQuery);
             checkStmt.setString(1, username);
@@ -29,12 +29,12 @@ public class SignupServlet extends HttpServlet {
             ResultSet rs = checkStmt.executeQuery();
 
             if (rs.next()) {
-                // USER ALREADY EXISTS
+                // User already exists
                 response.sendRedirect("signup.html?error=exists");
                 return;
             }
 
-            // INSERT NEW USER
+            // Insert new user
             String sql = "INSERT INTO users(username, password) VALUES (?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
 
