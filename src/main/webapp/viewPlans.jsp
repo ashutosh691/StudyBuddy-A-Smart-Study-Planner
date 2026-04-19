@@ -10,13 +10,13 @@
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(to right, #0f172a, #1e293b);
             color: #e2e8f0;
         }
 
         .container {
-            width: 80%;
+            width: 85%;
             margin: 40px auto;
         }
 
@@ -30,8 +30,13 @@
             background: #1e293b;
             padding: 20px;
             margin-bottom: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+
+        .plan:hover {
+            transform: translateY(-3px);
         }
 
         .title {
@@ -42,25 +47,46 @@
             padding-bottom: 8px;
         }
 
-        .item {
-            padding: 8px 12px;
-            margin: 6px 0;
-            background: #0f172a;
-            border-radius: 6px;
+        .day {
+            margin: 12px 0;
+            padding: 12px;
+            background: #0b1220;
             border-left: 4px solid #38bdf8;
+            border-radius: 8px;
+        }
+
+        .day-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #7dd3fc;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            background: #1e40af;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #e0f2fe;
         }
 
         .btn {
             display: block;
-            width: 220px;
-            margin: 30px auto;
+            width: 240px;
+            margin: 40px auto;
             padding: 12px;
             text-align: center;
             background: #2563eb;
             color: white;
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 500;
+            transition: 0.3s;
         }
 
         .btn:hover {
@@ -80,14 +106,14 @@
 
 <div class="container">
 
-    <h2>Your Saved Study Plans</h2>
+    <h2>📘 Your Saved Study Plans</h2>
 
-    <!-- If no plans -->
+    <!-- No plans -->
     <c:if test="${empty plans}">
         <div class="empty">No saved plans found.</div>
     </c:if>
 
-    <!-- Plans display -->
+    <!-- Plans -->
     <c:forEach var="entry" items="${plans}">
         <div class="plan">
 
@@ -95,16 +121,31 @@
                 Plan ID: ${entry.key}
             </div>
 
-            <c:forEach var="item" items="${entry.value}">
-                <div class="item">
-                    ${item}
+            <!-- Day-wise display -->
+            <c:forEach var="item" items="${entry.value}" varStatus="status">
+
+                <div class="day">
+                    <div class="day-title">
+                        Day ${status.index + 1}
+                    </div>
+
+                    <!-- Split by | -->
+                    <div class="chips">
+                        <c:forTokens items="${item}" delims="|" var="task">
+                            <div class="chip">
+                                ${task}
+                            </div>
+                        </c:forTokens>
+                    </div>
+
                 </div>
+
             </c:forEach>
 
         </div>
     </c:forEach>
 
-    <a href="index.html" class="btn">Create New Plan</a>
+    <a href="index.html" class="btn">+ Create New Plan</a>
 
 </div>
 
