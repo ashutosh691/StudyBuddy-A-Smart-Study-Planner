@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Saved Study Plans</title>
+    <title>Your Plans</title>
 
     <style>
         body {
@@ -16,7 +16,7 @@
         }
 
         .container {
-            width: 85%;
+            width: 80%;
             margin: 40px auto;
         }
 
@@ -32,64 +32,48 @@
             margin-bottom: 25px;
             border-radius: 12px;
             box-shadow: 0 6px 16px rgba(0,0,0,0.5);
-            transition: 0.3s;
-        }
-
-        .plan:hover {
-            transform: translateY(-3px);
         }
 
         .title {
             font-size: 18px;
             color: #38bdf8;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        .day {
-            margin: 12px 0;
-            padding: 12px;
-            background: #0b1220;
-            border-left: 4px solid #38bdf8;
-            border-radius: 8px;
+        .progress-bar {
+            width: 100%;
+            background: #334155;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 20px;
+            margin: 10px 0;
         }
 
-        .day-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #7dd3fc;
-        }
-
-        .chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .chip {
-            background: #1e40af;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 13px;
-            color: #e0f2fe;
-        }
-
-        .btn {
-            display: block;
-            width: 240px;
-            margin: 40px auto;
-            padding: 12px;
+        .progress-fill {
+            height: 100%;
+            background: #22c55e;
             text-align: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .stats {
+            font-size: 14px;
+            margin-top: 5px;
+            color: #cbd5f5;
+        }
+
+        .btn-open {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 14px;
             background: #2563eb;
             color: white;
+            border-radius: 6px;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: 0.3s;
         }
 
-        .btn:hover {
+        .btn-open:hover {
             background: #1d4ed8;
         }
 
@@ -99,6 +83,22 @@
             font-size: 18px;
             color: #94a3b8;
         }
+
+        .btn-create {
+            display: block;
+            width: 240px;
+            margin: 40px auto;
+            padding: 12px;
+            text-align: center;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .btn-create:hover {
+            background: #1d4ed8;
+        }
     </style>
 </head>
 
@@ -106,46 +106,41 @@
 
 <div class="container">
 
-    <h2>📘 Your Saved Study Plans</h2>
+    <h2>📊 Your Study Plans</h2>
 
     <!-- No plans -->
     <c:if test="${empty plans}">
-        <div class="empty">No saved plans found.</div>
+        <div class="empty">No plans found.</div>
     </c:if>
 
     <!-- Plans -->
-    <c:forEach var="entry" items="${plans}">
+    <c:forEach var="p" items="${plans}">
         <div class="plan">
 
             <div class="title">
-                Plan ID: ${entry.key}
+                ${p.name}
             </div>
 
-            <!-- Day-wise display -->
-            <c:forEach var="item" items="${entry.value}" varStatus="status">
-
-                <div class="day">
-                    <div class="day-title">
-                        Day ${status.index + 1}
-                    </div>
-
-                    <!-- Split by | -->
-                    <div class="chips">
-                        <c:forTokens items="${item}" delims="|" var="task">
-                            <div class="chip">
-                                ${task}
-                            </div>
-                        </c:forTokens>
-                    </div>
-
+            <!-- Progress bar -->
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:${p.percent}%;">
+                    ${p.percent}%
                 </div>
+            </div>
 
-            </c:forEach>
+            <div class="stats">
+                Completed: ${p.completed} / ${p.total}
+            </div>
+
+            <!-- Open plan -->
+            <a href="viewTasks?planId=${p.id}" class="btn-open">
+                Open Plan
+            </a>
 
         </div>
     </c:forEach>
 
-    <a href="index.html" class="btn">+ Create New Plan</a>
+    <a href="index.html" class="btn-create">+ Create New Plan</a>
 
 </div>
 

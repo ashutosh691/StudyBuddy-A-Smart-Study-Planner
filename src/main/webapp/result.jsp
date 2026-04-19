@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.examprepplanner.model.Task" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -28,10 +29,41 @@
 
         .card {
             background: #1e293b;
-            padding: 20px;
-            margin-bottom: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
             border-radius: 8px;
             border-left: 5px solid #38bdf8;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .left {
+            display: flex;
+            align-items: center;
+        }
+
+        .left input {
+            margin-right: 10px;
+        }
+
+        .status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .completed {
+            background: #22c55e;
+            color: white;
+        }
+
+        .pending {
+            background: #f59e0b;
+            color: white;
         }
 
         .btn {
@@ -70,20 +102,42 @@
 
     <h2>Your Study Plan</h2>
 
-    <c:forEach var="item" items="${planList}">
-        <div class="card">
-            ${item}
-        </div>
-    </c:forEach>
+    <!-- FORM START -->
+    <form action="updateTask" method="post">
 
-    <!-- SAVE BUTTON -->
-    <form action="savePlan" method="post">
-        <c:forEach var="item" items="${planList}">
-            <input type="hidden" name="planItem" value="${item}" />
+        <c:forEach var="t" items="${tasks}">
+            <div class="card">
+                <div class="task">
+
+                    <div class="left">
+                        <!-- ✅ FIXED: use ID -->
+                        <input type="checkbox" name="task"
+                               value="${t.id}"
+                               <c:if test="${t.status == 'COMPLETED'}">checked disabled</c:if>>
+
+                        <div>
+                            <strong>${t.date}</strong> :
+                            ${t.subject} → ${t.topic}
+                        </div>
+                    </div>
+
+                    <!-- ✅ Status badge -->
+                    <div class="status 
+                        <c:choose>
+                            <c:when test="${t.status == 'COMPLETED'}">completed</c:when>
+                            <c:otherwise>pending</c:otherwise>
+                        </c:choose>">
+                        ${t.status}
+                    </div>
+
+                </div>
+            </div>
         </c:forEach>
 
-        <button type="submit" class="btn">Save Plan</button>
+        <button type="submit" class="btn">Mark Completed</button>
+
     </form>
+    <!-- FORM END -->
 
     <div class="links">
         <a href="index.html">Create New Plan</a>
