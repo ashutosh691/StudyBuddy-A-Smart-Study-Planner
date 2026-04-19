@@ -15,7 +15,7 @@ public class ViewPlansServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    // Plan model (with getters for JSP)
+    // Plan model with getters for JSP
     public static class Plan {
         private int id;
         private String name;
