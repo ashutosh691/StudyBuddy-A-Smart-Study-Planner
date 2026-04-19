@@ -1,232 +1,221 @@
-# 📚 Intelligent Exam Preparation Planner
+# 📚 ExamPrepPlanner – Smart Study Planner
 
-## 🚀 Overview
-
-The Intelligent Exam Preparation Planner is a web-based application designed to help students generate optimized study plans based on multiple subjects, exam dates, and difficulty levels.
-
-The system intelligently prioritizes subjects and distributes topics across available days, ensuring efficient preparation.
+A full-stack web application that helps students **generate optimized study plans**, **track progress**, and **manage multiple exam schedules efficiently**.
 
 ---
 
-## 🎯 Objectives
+## 🚀 Features
 
-* Automate study plan generation
-* Prioritize subjects based on exam dates
-* Handle multiple subjects dynamically
-* Provide user-specific plan storage
-* Improve productivity and time management
+### 🧠 Smart Study Plan Generation
+
+* Automatically generates study schedules based on:
+
+  * Subject difficulty (Easy / Medium / Hard)
+  * Exam deadlines
+  * Number of topics
+* Ensures **even distribution of workload**
+
+---
+
+### 📋 Task Management
+
+* Each topic is converted into a **trackable task**
+* Tasks are scheduled **day-wise**
+* Users can mark tasks as:
+
+  * ✅ Completed
+  * ⏳ Pending
+
+---
+
+### 📊 Progress Tracking
+
+* Each plan has a **progress bar**
+* Shows:
+
+  * Completed tasks
+  * Total tasks
+  * Completion percentage
+
+---
+
+### 📁 Multi-Plan Support
+
+* Users can create **multiple study plans**
+* Each plan is stored separately
+* Easy navigation between plans
+
+---
+
+### 🔐 User Authentication
+
+* Login & session-based access
+* Each user sees only their own plans
 
 ---
 
 ## 🏗️ Tech Stack
 
-### 💻 Backend
-
-* Java (Servlets)
-* JDBC
-
-### 🌐 Frontend
-
-* HTML
-* CSS
-* JavaScript (for dynamic forms)
-
-### 🗄️ Database
-
-* MySQL
-
-### ⚙️ Server
-
-* Apache Tomcat
+| Layer        | Technology     |
+| ------------ | -------------- |
+| Frontend     | HTML, CSS, JSP |
+| Backend      | Java Servlets  |
+| Database     | MySQL          |
+| Server       | Apache Tomcat  |
+| Architecture | MVC Pattern    |
 
 ---
 
-## 🧠 Key Features (Phase 2)
+## 🗄️ Database Schema
 
-### 🔐 Authentication System
+### 🔹 `plans`
 
-* User Signup (with duplicate username validation)
-* User Login (session-based authentication)
-* Logout functionality
+* `id` (PK)
+* `user_id`
+* `plan_name`
+* `created_at`
 
----
+### 🔹 `tasks`
 
-### 📥 Dynamic Input System
-
-* User selects number of subjects
-* Dynamic form generation using JavaScript
-* Input includes:
-
-  * Subject Name
-  * Topics (comma-separated)
-  * Difficulty Level
-  * Exam Date
+* `id` (PK)
+* `plan_id` (FK)
+* `subject`
+* `topic`
+* `task_date`
+* `status` (PENDING / COMPLETED)
 
 ---
 
-### 🧠 Intelligent Scheduling Logic
+## 🔄 Application Flow
 
-* Subjects sorted based on nearest exam date
-* Topics distributed across available days
-* Difficulty considered during planning
-* Ensures urgent subjects are prioritized
-
----
-
-### 📊 Study Plan Generation
-
-* Day-wise structured plan
-* Multiple subjects handled simultaneously
-* Clean and readable output
+1. User logs in
+2. Enters subjects, topics, difficulty, exam dates
+3. Scheduler generates optimized plan
+4. Plan is saved in database
+5. User views all plans
+6. Opens a plan → sees tasks
+7. Marks tasks as completed
+8. Progress bar updates dynamically
 
 ---
 
-### 💾 Database Integration
+## 📸 Screenshots
 
-* Normalized schema design:
+### 🔹 1. Plan Creation Page
 
-#### Tables:
-
-* `users` → stores user credentials
-* `study_plan` → stores plan metadata
-* `plan_details` → stores day-wise schedule
+![Plan Creation](screenshots/create-plan.png)
 
 ---
 
-### 🔗 Relationships
+### 🔹 2. Generated Study Plan
 
-* Each plan is linked to a user using `user_id`
-* Each plan contains multiple day-wise entries
-
----
-
-### 💡 Conditional Saving
-
-* Plan is NOT saved automatically
-* User must click **"Save Plan"**
-* Improves control and user experience
+![Generated Plan](screenshots/generated-plan.png)
 
 ---
 
-### 📂 View Saved Plans
+### 🔹 3. Plans Dashboard (Progress View)
 
-* Users can view previously saved plans
-* Data filtered based on logged-in user
-* Structured display using JSP + JSTL
+![Dashboard](screenshots/dashboard.png)
 
 ---
 
-### 🎨 UI/UX Improvements
+## ⚙️ How to Run
 
-* Clean dark-themed interface
-* Card-based layout for plans
-* Popup alerts for invalid login/signup
-* Responsive and user-friendly design
+### 1️⃣ Clone the repository
 
----
-
-## 🔄 System Workflow
-
-Signup → Login → Input Subjects → Generate Plan → Save Plan → View Plans → Logout
-
----
-
-## 🗂️ Project Structure
-
-```
-ExamPrepPlanner
-│
-├── src/main/java/com/examprepplanner
-│   ├── dao
-│   │   └── PlanDAO.java
-│   │
-│   ├── database
-│   │   └── DBConnection.java
-│   │
-│   ├── logic
-│   │   └── Scheduler.java
-│   │
-│   ├── model
-│   │   └── Subject.java
-│   │
-│   └── servlet
-│       ├── LoginServlet.java
-│       ├── SignupServlet.java
-│       ├── LogoutServlet.java
-│       ├── PlanServlet.java
-│       ├── SavePlanServlet.java
-│       └── ViewPlansServlet.java
-│
-├── src/main/webapp
-│   ├── index.html
-│   ├── login.html
-│   ├── signup.html
-│   ├── result.jsp
-│   └── viewPlans.jsp
-│
-└── WEB-INF
+```bash
+git clone https://github.com/your-username/ExamPrepPlanner.git
 ```
 
 ---
 
-## 🧪 Testing & Validation
+### 2️⃣ Import into Eclipse
 
-* Tested with multiple subjects and varying difficulty levels
-* Verified correct prioritization based on exam dates
-* Validated database storage and retrieval
-* Handled edge cases:
-
-  * Same exam dates
-  * Very few days left
-  * Multiple subjects with many topics
+* File → Import → Existing Project
+* Select project folder
 
 ---
 
-## 🧠 Design Principles
+### 3️⃣ Setup Database
 
-* MVC architecture (Servlet → Logic → JSP)
-* Separation of concerns
-* Normalized database design
-* Session-based user management
+Open MySQL and run:
+
+```sql
+CREATE DATABASE examprepplanner;
+USE examprepplanner;
+
+CREATE TABLE plans (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    plan_name VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tasks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plan_id INT,
+    subject VARCHAR(100),
+    topic VARCHAR(255),
+    task_date DATE,
+    status VARCHAR(20) DEFAULT 'PENDING',
+    FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE CASCADE
+);
+```
 
 ---
 
-## ⚠️ Limitations (Current Phase)
+### 4️⃣ Configure DB Connection
 
-* No edit/delete functionality for plans
-* No visualization (charts/graphs)
-* Static difficulty handling (can be improved)
+Update:
 
----
+```java
+DBConnection.java
+```
 
-## 🚀 Future Enhancements (Phase 3)
-
-* Calendar-based scheduling view
-* Plan editing and deletion
-* Progress tracking system
-* Smart AI-based scheduling improvements
-* Visualization dashboards (charts/graphs)
+```java
+private static final String USER = "root";
+private static final String PASSWORD = "your_password";
+```
 
 ---
 
-## 🧠 Key Learning Outcomes
+### 5️⃣ Run on Tomcat
 
-* Java Servlets and JSP integration
-* JDBC and database normalization
-* Session management
-* Dynamic UI using JavaScript
-* Full-stack application development
+* Right-click project → Run on Server
+* Open:
+
+```text
+http://localhost:8080/ExamPrepPlanner
+```
+
+---
+
+## 🧠 Key Concepts Used
+
+* Greedy Scheduling Algorithm
+* Priority Queue (based on deadline & difficulty)
+* JDBC for database operations
+* MVC Architecture
+* Session Management
+
+---
+
+## 📌 Future Improvements
+
+* 📅 Calendar view for tasks
+* 📊 Graph-based analytics
+* 🔔 Notifications & reminders
+* ✏️ Edit/Delete plans
+* 🧾 Custom plan naming
 
 ---
 
 ## 👨‍💻 Author
 
-Ashutosh Upreti
+**Ashutosh Upreti**
 
 ---
 
-## 📌 Conclusion
+## ⭐ If you like this project
 
-The project successfully demonstrates a full-stack web application that intelligently generates and manages study plans. It provides a strong foundation for further enhancements in Phase 3.
-
----
+Give it a ⭐ on GitHub!

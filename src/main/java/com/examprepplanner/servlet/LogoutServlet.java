@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+@SuppressWarnings("serial")
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
 

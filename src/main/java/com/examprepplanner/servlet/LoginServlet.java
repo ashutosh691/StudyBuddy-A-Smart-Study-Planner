@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 
 import com.examprepplanner.database.DBConnection;
 
+@SuppressWarnings("serial")
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 

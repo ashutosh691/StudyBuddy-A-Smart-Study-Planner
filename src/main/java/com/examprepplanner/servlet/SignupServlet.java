@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 
 import com.examprepplanner.database.DBConnection;
 
+@SuppressWarnings("serial")
 @WebServlet("/signup")
 public class SignupServlet extends HttpServlet {
 
@@ -20,7 +21,7 @@ public class SignupServlet extends HttpServlet {
 
         try (Connection con = DBConnection.getConnection()) {
 
-            // 🔍 CHECK IF USER EXISTS
+            // CHECK IF USER EXISTS
             String checkQuery = "SELECT * FROM users WHERE username=?";
             PreparedStatement checkStmt = con.prepareStatement(checkQuery);
             checkStmt.setString(1, username);
@@ -28,12 +29,12 @@ public class SignupServlet extends HttpServlet {
             ResultSet rs = checkStmt.executeQuery();
 
             if (rs.next()) {
-                // ❌ USER ALREADY EXISTS
+                // USER ALREADY EXISTS
                 response.sendRedirect("signup.html?error=exists");
                 return;
             }
 
-            // ✅ INSERT NEW USER
+            // INSERT NEW USER
             String sql = "INSERT INTO users(username, password) VALUES (?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
 
