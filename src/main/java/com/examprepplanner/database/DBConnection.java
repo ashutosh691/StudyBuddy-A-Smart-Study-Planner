@@ -13,7 +13,7 @@ public class DBConnection {
             + "&serverTimezone=UTC";
 
     private static final String USER = "root";
-    private static final String PASSWORD = "Ashutosh280705";
+    private static final String PASSWORD = "your_password";
 
     public static Connection getConnection() throws SQLException {
 
