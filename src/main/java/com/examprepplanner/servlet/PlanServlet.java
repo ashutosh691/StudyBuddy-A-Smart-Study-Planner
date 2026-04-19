@@ -33,7 +33,7 @@ public class PlanServlet extends HttpServlet {
 
         Scheduler scheduler = new Scheduler();
 
-        // 🔹 Collect subjects
+        // Collect subjects
         for (int i = 1; i <= subjectCount; i++) {
 
             String subject = request.getParameter("sub" + i);
@@ -47,13 +47,13 @@ public class PlanServlet extends HttpServlet {
             scheduler.addSubject(subject, topics, examDate, difficulty);
         }
 
-        // 🔹 Generate tasks
+        // Generate tasks
         List<Task> tasks = scheduler.generatePlan();
 
         try {
             Connection con = DBConnection.getConnection();
 
-            // 🔥 Step 1: Insert Plan
+            //  Step 1: Insert Plan
             PreparedStatement psPlan = con.prepareStatement(
                 "INSERT INTO plans(user_id, plan_name) VALUES (?, ?)",
                 Statement.RETURN_GENERATED_KEYS
