@@ -35,7 +35,7 @@ public class UpdateTaskServlet extends HttpServlet {
         try {
             Connection con = DBConnection.getConnection();
 
-            // ✅ Correct query (ID based)
+            // Correct query :ID based
             PreparedStatement ps = con.prepareStatement(
                 "UPDATE tasks SET status='COMPLETED' WHERE id=?"
             );
@@ -50,7 +50,7 @@ public class UpdateTaskServlet extends HttpServlet {
 
             con.close();
 
-            // ✅ Redirect back to plans
+            // Redirect back to plans
             response.sendRedirect("viewPlans");
 
         } catch (Exception e) {
