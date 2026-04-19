@@ -30,8 +30,6 @@ public class Task {
         this.status = status;
     }
 
-    //  GETTERS
-
     public int getId() {
         return id;
     }
@@ -55,8 +53,6 @@ public class Task {
     public String getStatus() {
         return status;
     }
-
-    // SETTERS 
 
     public void setId(int id) {
         this.id = id;
