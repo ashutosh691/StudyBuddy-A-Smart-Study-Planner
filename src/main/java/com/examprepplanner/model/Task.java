@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class Task {
 
-    private int id;          // REQUIRED for DB updates
-    private int planId;      // REQUIRED for grouping tasks
+    private int id;          // Required for DB updates
+    private int planId;      // Required for grouping tasks
 
     private String subject;
     private String topic;
@@ -20,7 +20,7 @@ public class Task {
         this.status = "PENDING";
     }
 
-    // Full constructor (for DB retrieval)
+    // Full constructor for DB retrieval
     public Task(int id, int planId, String subject, String topic, LocalDate date, String status) {
         this.id = id;
         this.planId = planId;
@@ -30,7 +30,7 @@ public class Task {
         this.status = status;
     }
 
-    // ===== GETTERS =====
+    //  GETTERS
 
     public int getId() {
         return id;
@@ -56,7 +56,7 @@ public class Task {
         return status;
     }
 
-    // ===== SETTERS =====
+    // SETTERS 
 
     public void setId(int id) {
         this.id = id;
