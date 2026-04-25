@@ -35,7 +35,6 @@ public class PlanServlet extends HttpServlet {
 
         // Collect subjects
         for (int i = 1; i <= subjectCount; i++) {
-
             String subject = request.getParameter("sub" + i);
             String topics = request.getParameter("topics" + i);
             String difficulty = request.getParameter("diff" + i);
