@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Subject {
-
     private String name;
     private LocalDate examDate;
     private List<String> topics;
