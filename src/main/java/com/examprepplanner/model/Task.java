@@ -1,4 +1,3 @@
-
 package com.examprepplanner.model;
 
 import java.time.LocalDate;
