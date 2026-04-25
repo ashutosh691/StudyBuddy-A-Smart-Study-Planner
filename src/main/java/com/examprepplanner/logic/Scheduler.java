@@ -108,7 +108,6 @@ public class Scheduler {
                     used++;
                 }
             }
-
             day++;
         }
 
