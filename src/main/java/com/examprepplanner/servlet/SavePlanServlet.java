@@ -22,7 +22,6 @@ public class SavePlanServlet extends HttpServlet {
             response.getWriter().println("Please login first.");
             return;
         }
-
         int userId = (int) session.getAttribute("userId");
 
         String name = request.getParameter("name");
