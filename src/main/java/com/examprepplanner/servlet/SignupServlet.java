@@ -42,7 +42,6 @@ public class SignupServlet extends HttpServlet {
             stmt.setString(2, password);
 
             stmt.executeUpdate();
-
             response.sendRedirect("login.html?success=1");
 
         } catch (Exception e) {
