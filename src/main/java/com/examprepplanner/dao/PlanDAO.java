@@ -40,7 +40,7 @@ public class PlanDAO {
             for (String item : planList) {
                 detailStmt.setInt(1, planId);
                 detailStmt.setInt(2, day++);
-                detailStmt.setString(3, item); // ← encoding depends on connection
+                detailStmt.setString(3, item); // encoding depends on connection
                 detailStmt.addBatch();
             }
 
